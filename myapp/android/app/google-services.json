@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "464987784089",
+    "project_id": "food-delivery-app-kabarak",
+    "storage_bucket": "food-delivery-app-kabarak.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464987784089:android:72fa4fc886166e3a200908",
+        "android_client_info": {
+          "package_name": "com.kabafood.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC164zODPWE246k0wbsbkjqR47AMNLBTL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
