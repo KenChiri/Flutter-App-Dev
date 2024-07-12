@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/src/features/authentication/controllers/navigation_bar_state.dart';
+import 'package:myapp/src/features/controllers/navigation_bar_state.dart';
 import 'package:myapp/src/utils/theme/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -70,6 +70,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       break;
                     case 1:
                       // Add navigation logic for Restaurants
+
                       break;
                     case 2:
                       // Add navigation logic for Orders
