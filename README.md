@@ -71,9 +71,9 @@ Insta Foods is a comprehensive food delivery solution that connects restaurants,
 
 - **Mobile App**: Dart, Flutter
 - **Web Application**: React.js
-- **Backend**: [Specify your backend technology]
-- **Database**: [Specify your database technology]
-- **Payment Integration**: [List integrated payment gateways]
+- **Backend**: 
+- **Database**: [Firebase Firestore]
+- **Payment Integration**: [Credit Cards, MPESA flutter package]
 
 ## Installation and Setup
 
