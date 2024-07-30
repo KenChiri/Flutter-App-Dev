@@ -5,9 +5,9 @@ import 'package:flutter/foundation.dart';
 enum AuthView {
   RegisterView,
   LoginView,
-  AdminHome,
+
   DeliveryBoyHome,
-  RestaurantManagerHome,
+
   UserHome
 }
 
@@ -72,15 +72,10 @@ class AuthState with ChangeNotifier {
   void _setInitialView() {
     if (_userRole != null) {
       switch (_userRole) {
-        case 'Admin':
-          _currentView = AuthView.AdminHome;
-          break;
         case 'DeliveryBoy':
           _currentView = AuthView.DeliveryBoyHome;
           break;
-        case 'RestaurantManager':
-          _currentView = AuthView.RestaurantManagerHome;
-          break;
+
         case 'User':
           _currentView = AuthView.UserHome;
           break;

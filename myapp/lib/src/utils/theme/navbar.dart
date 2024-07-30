@@ -70,6 +70,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       break;
                     case 1:
                       // Add navigation logic for Restaurants
+                      navigationBarState.navigateToRestaurans(context);
 
                       break;
                     case 2:

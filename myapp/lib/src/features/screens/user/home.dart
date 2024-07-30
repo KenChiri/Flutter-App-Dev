@@ -54,7 +54,6 @@ class HomePage extends StatelessWidget {
         title: const Text(
           "Home Menu",
         ),
-        leading: const Icon(Icons.line_style), // Use a specific icon
       ),
       body: SingleChildScrollView(
         child: Column(

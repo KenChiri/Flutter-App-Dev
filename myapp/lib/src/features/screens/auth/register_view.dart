@@ -2,13 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/firebase_options.dart';
 import 'package:myapp/src/common_widgets/anchor_text.dart';
 import 'package:myapp/src/features/screens/auth/login_view.dart';
 import 'package:myapp/src/features/screens/auth/model/user_model.dart';
-import 'package:myapp/src/features/screens/restaurant_manager/rm_home.dart';
+import 'package:myapp/src/features/screens/delivery_boy/deliboy_homescreen.dart';
 import 'package:myapp/src/features/screens/user/home.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -59,12 +61,26 @@ class _RegisterViewState extends State<RegisterView> {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  // Other existing methods...
-
+// This will display the error messages
   void _showErrorMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );
+  }
+  // Other existing methods...
+
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    // Regular expression for email validation
+    final RegExp emailRegExp = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    );
+    if (!emailRegExp.hasMatch(value)) {
+      return 'Please enter a valid email';
+    }
+    return null;
   }
 
   @override
@@ -148,12 +164,7 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                               style: TextStyle(
                                   color: Color.fromARGB(255, 248, 244, 199)),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your email';
-                                }
-                                return null;
-                              },
+                              validator: validateEmail,
                             ),
                             const SizedBox(height: 10.0),
                             TextFormField(
@@ -222,9 +233,6 @@ class _RegisterViewState extends State<RegisterView> {
                                 DropdownMenuItem(
                                     value: 'User', child: Text('User')),
                                 DropdownMenuItem(
-                                    value: 'RestaurantManager',
-                                    child: Text('Restaurant Manager')),
-                                DropdownMenuItem(
                                   value: 'DeliveryGuy',
                                   child: Text("Delivery Guy"),
                                 )
@@ -240,19 +248,6 @@ class _RegisterViewState extends State<RegisterView> {
                                 }
                                 return null;
                               },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: AnchorText(
-                                text: "Have an account? Login",
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginView(),
-                                    ),
-                                  );
-                                },
-                              ),
                             ),
                             const SizedBox(height: 10.0),
                             Center(
@@ -282,44 +277,25 @@ class _RegisterViewState extends State<RegisterView> {
                                       });
 
                                       print(userCredential);
-                                      // Navigate to appropriate home page based on role
-                                      if (_selectedRole ==
-                                          'RestaurantManager') {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const RestaurantHomePage()),
-                                        );
-                                      } else {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const HomePage()),
-                                        );
-                                      }
+                                      // Redirect to login page after successful registration
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LoginView(),
+                                        ),
+                                      );
                                     } on FirebaseAuthException catch (e) {
-                                      setState(() {
-                                        if (e.code == 'weak-password') {
-                                          _errorMessage =
-                                              'The password provided is too weak.';
-                                        } else if (e.code ==
-                                            'email-already-in-use') {
-                                          _errorMessage =
-                                              'The account already exists for that email.';
-                                        } else if (e.code == 'invalid-email') {
-                                          _errorMessage =
-                                              'The email address is not valid.';
-                                        } else {
-                                          _errorMessage =
-                                              'Failed with error code: ${e.code}';
-                                        }
-                                      });
-                                      _showErrorMessage(_errorMessage);
+                                      if (e.code == 'weak-password') {
+                                        _showErrorMessage(
+                                            'The password provided is too weak.');
+                                      } else if (e.code ==
+                                          'email-already-in-use') {
+                                        _showErrorMessage(
+                                            'An account already exists for that email.');
+                                      }
                                     } catch (e) {
                                       _showErrorMessage(
-                                          'Registration failed with error: $e');
+                                          'An error occurred during registration.');
                                     }
                                   }
                                 },
@@ -337,7 +313,8 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                             const SizedBox(height: 10.0),
                             Center(
-                              child: TextButton(
+                              child: SignInButton(
+                                Buttons.Google,
                                 onPressed: () async {
                                   try {
                                     final userCredential =
@@ -349,11 +326,16 @@ class _RegisterViewState extends State<RegisterView> {
                                         .doc(userCredential.user!.uid)
                                         .set({
                                       'email': userCredential.user!.email,
+                                      'name': userCredential.user!
+                                          .displayName, // Save name from Google
+                                      'phone_no': userCredential
+                                              .user!.phoneNumber ??
+                                          '', // Save phone number from Google, if available
                                       'role': 'User', // Default role is User
                                       'userId': userCredential.user!.uid,
                                     });
 
-                                    // Navigate to home page after successful sign-in
+                                    // Navigate to login after successful sign-u[]
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
@@ -370,16 +352,25 @@ class _RegisterViewState extends State<RegisterView> {
                                         'Error signing in with Google');
                                   }
                                 },
-                                child: const Text('Sign Up with Google'),
-                                style: TextButton.styleFrom(
-                                  fixedSize: const Size(200, 50),
-                                  backgroundColor:
-                                      Color.fromARGB(255, 253, 190, 0),
-                                  foregroundColor: Color.fromARGB(255, 0, 0, 0),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      30.0), // Adjust for desired roundness
                                 ),
+                                padding: const EdgeInsets.all(10.0),
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AnchorText(
+                                text: "Have an account? Login",
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginView(),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ],

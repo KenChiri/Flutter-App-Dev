@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:myapp/src/features/screens/auth/authstate.dart';
-import 'package:myapp/src/features/screens/profile.dart';
+import 'package:myapp/src/features/screens/user/profile.dart';
 import 'package:myapp/src/features/screens/user/home.dart';
+
 import 'package:provider/provider.dart';
+
+import '../screens/user/restaurant.dart';
 
 class NavigationBarState extends ChangeNotifier {
   int _currentIndex = 0;
@@ -22,19 +25,24 @@ class NavigationBarState extends ChangeNotifier {
         context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 
-void navigateToProfilePage(BuildContext context) {
-  final authState = Provider.of<AuthState>(context, listen: false);
-  final email = authState.currentUser?.email ?? '';
-  final phoneNumber = authState.userPhoneNo ?? '';
+  void navigateToRestaurans(BuildContext context) {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => RestaurantPage()));
+  }
 
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (context) => UserProfile(
-        email: email,
-        phoneNumber: phoneNumber,
+  void navigateToProfilePage(BuildContext context) {
+    final authState = Provider.of<AuthState>(context, listen: false);
+    final email = authState.currentUser?.email ?? '';
+    final phoneNumber = authState.userPhoneNo ?? '';
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UserProfile(
+          email: email,
+          phoneNumber: phoneNumber,
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }

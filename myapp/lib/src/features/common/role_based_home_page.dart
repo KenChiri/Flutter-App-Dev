@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:myapp/src/features/screens/admin/admin_home_screen.dart';
+
 import 'package:myapp/src/features/screens/auth/authstate.dart';
 import 'package:myapp/src/features/screens/auth/login_view.dart';
 import 'package:myapp/src/features/screens/delivery_boy/deliboy_homescreen.dart';
-import 'package:myapp/src/features/screens/restaurant_manager/rm_home.dart';
+
 import 'package:myapp/src/features/screens/user/home.dart';
 import 'package:provider/provider.dart';
 
@@ -34,12 +34,8 @@ class RoleBasedHomeScreen extends StatelessWidget {
                       if (snapshot.data != null && snapshot.data!.exists) {
                         String role = snapshot.data!['role'];
                         switch (role) {
-                          case 'Admin':
-                            return AdminHomeScreen();
                           case 'DeliveryBoy':
                             return DeliBoyHome();
-                          case 'RestaurantManager':
-                            return RestaurantHomePage();
                           case 'User':
                             return HomePage();
                           default:

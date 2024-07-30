@@ -3,15 +3,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myapp/firebase_options.dart';
 import 'package:myapp/src/common_widgets/anchor_text.dart';
-import 'package:myapp/src/features/screens/admin/admin_home_screen.dart';
+
 import 'package:myapp/src/features/screens/auth/register_view.dart';
 import 'package:myapp/src/features/screens/delivery_boy/deliboy_homescreen.dart';
-import 'package:myapp/src/features/screens/restaurant_manager/rm_home.dart';
+
 import 'package:myapp/src/features/screens/user/home.dart';
 
 class LoginView extends StatefulWidget {
@@ -83,32 +85,60 @@ class _LoginViewState extends State<LoginView> {
   Future<void> _navigateBasedOnRole(User? user) async {
     if (user != null) {
       final userDoc = await FirebaseFirestore.instance
-          .collection('users')
+          .collection('Users')
           .doc(user.uid)
           .get();
-      final role = userDoc['role'];
 
-      if (role == 'Admin') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const AdminHomeScreen()),
-        );
-      } else if (role == 'DeliveryBoy') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const DeliBoyHome()),
-        );
-      } else if (role == 'RestaurantManager') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const RestaurantHomePage()),
-        );
+      if (userDoc.exists) {
+        final role = userDoc['role'];
+
+        if (role != null) {
+          if (role == 'DeliveryBoy') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const DeliBoyHome()),
+            );
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          }
+        } else {
+          // Role is null
+          print('Error: Role is null');
+          // Handle this case, e.g., show a message to the user
+          Get.snackbar(
+            "Error",
+            "User role is not defined",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red.shade300.withOpacity(0.1),
+            colorText: Colors.red,
+          );
+        }
       } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+        // Document does not exist
+        print('Error: User document does not exist');
+        // Handle this case, e.g., show a message to the user
+        Get.snackbar(
+          "Error",
+          "User document does not exist",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.shade300.withOpacity(0.1),
+          colorText: Colors.red,
         );
       }
+    } else {
+      // User is null
+      print('Error: User is null');
+      // Handle this case, e.g., show a message to the user
+      Get.snackbar(
+        "Error",
+        "User is not logged in",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade300.withOpacity(0.1),
+        colorText: Colors.red,
+      );
     }
   }
 
@@ -216,7 +246,8 @@ class _LoginViewState extends State<LoginView> {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.0),
                                   borderSide: BorderSide(
-                                      color: Colors.grey, width: 1.0),
+                                      color:
+                                          Color.fromARGB(255, 242, 225, 139)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.0),
@@ -238,19 +269,6 @@ class _LoginViewState extends State<LoginView> {
                               },
                             ),
                             const SizedBox(height: 10.0),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: AnchorText(
-                                text: "Create a new account",
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => RegisterView(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
                             Center(
                               child: TextButton(
                                 onPressed: _login,
@@ -282,6 +300,25 @@ class _LoginViewState extends State<LoginView> {
                                     _showErrorMessage(
                                         'Error signing in with Google');
                                   }
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      30.0), // Adjust for desired roundness
+                                ),
+                                padding: const EdgeInsets.all(10.0),
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AnchorText(
+                                text: "Create a new account",
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => RegisterView(),
+                                    ),
+                                  );
                                 },
                               ),
                             ),
