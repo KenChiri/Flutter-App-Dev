@@ -77,15 +77,14 @@ Insta Foods is a comprehensive food delivery solution that connects restaurants,
 
 ## Installation and Setup
 
-[Provide instructions for setting up the development environment, including prerequisites, dependencies, and configuration steps for both the mobile app and web application]
 
 ## Contributing
 
-[Guidelines for contributing to the project, including coding standards, pull request process, and issue reporting]
+
 
 ## License
 
-[Specify the license under which the project is released]
+
 
 ## Contact
 
