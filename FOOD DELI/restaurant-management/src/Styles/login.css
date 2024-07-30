@@ -1,0 +1,84 @@
+/* styles.css (or your preferred CSS file name) */
+
+.auth-container {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh; /* Set minimum height for full viewport coverage */
+  }
+  
+  .auth-container > * {
+    flex: 1; /* Distribute available space equally between both sides */
+  }
+  
+  /* Brand Side Styling */
+  
+  .brand-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background-color: #f0f0f0; /* Light gray background */
+  }
+  
+  .brand-side img {
+    width: 200px; /* Adjust image width as needed */
+    margin-bottom: 20px;
+  }
+  
+  .brand-side h2 {
+    font-size: 2rem; /* Adjust heading size as needed */
+    margin: 0;
+  }
+  
+  /* Login Form Styling */
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background-color: #fff; /* White background */
+    border-radius: 5px; /* Add some rounded corners */
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .auth-form input,
+  .auth-form button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .auth-form button {
+    background-color: #333; /* Adjust button background color */
+    color: #fff; /* Adjust button text color */
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  /* Auth Footer Styling */
+  
+  .auth-footer {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .auth-footer a {
+    color: #333; /* Adjust link color */
+  }
+  

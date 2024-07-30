@@ -1,6 +1,6 @@
 // cart_provider.dart
 
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'food_item.dart';
 
 class CartProvider with ChangeNotifier {
@@ -22,3 +22,4 @@ class CartProvider with ChangeNotifier {
     return _items.fold(0.0, (sum, item) => sum + item.price);
   }
 }
+*/

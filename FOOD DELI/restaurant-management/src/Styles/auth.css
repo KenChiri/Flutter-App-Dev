@@ -1,0 +1,82 @@
+/* src/Styles/forms.css */
+
+.auth-container {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-left, .auth-right {
+  flex: 1;
+  padding: 2rem;
+}
+
+.auth-left {
+  border-right: 1px solid #ccc;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.primary-button {
+  padding: 0.75rem;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #0056b3;
+}
+
+.error-message {
+  color: red;
+  margin-top: 1rem;
+}
+
+.auth-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.auth-right h2 {
+  margin-bottom: 1rem;
+}
+
+.auth-right p {
+  margin-bottom: 2rem;
+}
+
+.brand-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
