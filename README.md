@@ -15,23 +15,28 @@ Insta Foods is a comprehensive food delivery solution that connects restaurants,
 ## Key Features
 
 ### Mobile App
-1. **Homepage**
+1. **Login/Signup page**
+   -We used firebase authentication to use the various providers like sign in with google and the signin with email or password providers.
+Here is how the UI looks like
+   
+
+3. **Homepage**
    - Featured restaurants and promotions
    - Quick access to popular cuisines and dishes
 
-2. **Restaurant Browsing**
+4. **Restaurant Browsing**
    - List view of available restaurants
    - Search and filter options
 
-3. **Menu Description**
+5. **Menu Description**
    - Detailed menu items with descriptions, prices, and images
    - Customization options for dishes
 
-4. **Cart Section**
+6. **Cart Section**
    - Real-time order summary
    - Edit quantities and remove items
 
-5. **Checkout and Payment**
+7. **Checkout and Payment**
    - Multiple payment options
    - Address selection and delivery instructions
 
